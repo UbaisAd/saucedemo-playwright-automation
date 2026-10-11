@@ -36,6 +36,8 @@ console.log('Random index:', randomIndex);
             const productNames = items.locator(ProductPage.locators.productName);
             const productPrices = items.locator(ProductPage.locators.productPrice);
 
+            await items.first().waitFor({ state: 'visible' });
+
             const productDetails = [];
 
             for(let i = 0;i<await items.count();i++){
