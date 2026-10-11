@@ -25,6 +25,9 @@ class ProductPage{
     
     console.log("Selected Product: " + randomProduct.name);
     console.log("Price: " + randomProduct.price);
+    console.log('Products:', allProducts);
+console.log('Product count:', allProducts.length);
+console.log('Random index:', randomIndex);
     return randomProduct
 }
 
