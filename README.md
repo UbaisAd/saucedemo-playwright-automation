@@ -179,4 +179,4 @@ SauceDemo: https://www.saucedemo.com/
 
 **Ubais Ahamed**
 
-**GitHub repository:** https://github.com/ubais-ad/saucedemo-playwright-automation
+**GitHub repository:** https://github.com/UbaisAd/saucedemo-playwright-automation
