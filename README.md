@@ -2,18 +2,21 @@
 
 ## Overview
 
-This project is a UI automation framework built using **Playwright Test with JavaScript** to test the SauceDemo web application.
+This project is a reusable end-to-end UI automation framework built using **Playwright Test and JavaScript** to test the [SauceDemo](https://www.saucedemo.com/) demo e-commerce application.
 
-It follows the Page Object Model (POM) design pattern to keep page locators, actions, test cases, and test data organized and reusable.
+The framework follows the **Page Object Model (POM)** design pattern and uses reusable fixtures and separate test data to improve maintainability, readability, and reusability.
+
+It covers login, product listings, shopping cart operations, and checkout workflows.
 
 ## Tech Stack
 
 - JavaScript
-- Playwright Test
+- Playwright Test (`@playwright/test`)
 - Chromium
 - Node.js v24.19.0
 - npm 12.0.2
 - HTML test reports
+- GitHub Actions
 
 ## Project Structure
 
@@ -38,8 +41,6 @@ QaTask/
 │   ├── products.spec.js
 │   ├── cart.spec.js
 │   └── checkout.spec.js
-├── FailureScreenshots/
-├── playwright-report/
 ├── playwright.config.js
 ├── package.json
 ├── package-lock.json
@@ -47,20 +48,21 @@ QaTask/
 └── README.md
 ```
 
-*Note: `node_modules/` and generated test artifacts are excluded from the repository.*
+Generated test results, HTML reports, screenshots, traces, and `node_modules/` are excluded from version control according to the project's `.gitignore`.
 
 ## Features
 
-- Page Object Model for reusable page interactions.
-- Data-driven login tests using a separate test-data file.
-- Custom Playwright fixture for reusable page setup.
-- Automated product listing verification.
-- Add-to-cart and remove-from-cart testing.
-- Checkout success and missing-information validation.
-- HTML test reports.
+- Reusable Page Object Model implementations.
+- Data-driven login tests using separate test data.
+- Custom Playwright fixtures for reusable setup.
+- Product listing and price verification.
+- Add-to-cart and remove-from-cart functionality.
+- Checkout completion and missing-information validation.
+- Playwright web-first assertions and automatic waiting.
 - Screenshots and traces for failed tests.
+- HTML test reports.
 - Chromium browser execution.
-- CI workflow configuration.
+- GitHub Actions workflow configuration.
 
 ## Test Scenarios
 
@@ -72,6 +74,16 @@ QaTask/
 | `checkout.spec.js` | Complete checkout and validate missing customer information |
 
 The suite contains 10 test cases covering login, product listing, cart, and checkout functionality.
+
+### Parameterized Login Tests
+
+Login scenarios use a dedicated test-data file to separate credentials and expected outcomes from test implementation.
+
+The scenarios cover:
+
+- Valid username and password.
+- Invalid username and password.
+- Valid username with an invalid password.
 
 ## Prerequisites
 
@@ -85,13 +97,15 @@ Versions used during development:
 
 ## Installation
 
-Clone or download this repository and open a terminal in the project directory.
+Clone or download the repository and open a terminal in the project directory.
 
-Install dependencies:
+Install the dependencies:
 
 ```bash
 npm install
 ```
+
+Alternatively, use `npm ci` to install dependencies from the committed lock file.
 
 Install the Chromium browser:
 
@@ -119,7 +133,7 @@ Run tests with the browser visible:
 npx playwright test --headed
 ```
 
-Run the suite again to check repeatability:
+Run the complete suite again to check for inconsistent results:
 
 ```bash
 npx playwright test
@@ -133,50 +147,66 @@ After test execution, open the HTML report:
 npx playwright show-report
 ```
 
-The report provides an overview of test results and details for individual test cases.
+The HTML report provides an overview of passed and failed tests and details for individual test cases.
 
 ## Failure Debugging
 
-The Playwright configuration is set to capture screenshots on failure and retain traces for failed tests. Test artifacts are written to the configured `FailureScreenshots/` output directory.
+The Playwright configuration is set to capture screenshots on failure and retain traces for failed tests. Generated artifacts are written to the configured `FailureScreenshots/` output directory.
 
-To list generated artifacts in PowerShell:
+### Locate failure artifacts
+
+In PowerShell, list the generated files:
 
 ```powershell
 Get-ChildItem .\FailureScreenshots -Recurse -File
 ```
 
-To open a trace, replace the example folder with the actual test-specific folder name:
+To locate trace files specifically:
 
-```bash
-npx playwright show-trace "FailureScreenshots/<test-specific-folder>/trace.zip"
+```powershell
+Get-ChildItem .\FailureScreenshots -Filter trace.zip -Recurse
 ```
 
-The Trace Viewer can help inspect test actions, page snapshots, and errors to understand why a test failed.
+Use the actual path returned by the command to open a trace:
+
+```bash
+npx playwright show-trace "path/to/trace.zip"
+```
+
+The Playwright Trace Viewer helps inspect recorded actions, page snapshots, network activity, and errors to investigate failures.
+
+Screenshots provide visual evidence of the page state when a failure occurs, while traces help identify the sequence of actions leading to the failure.
 
 ## Framework Design
 
 ### Page Object Model
 
-The `pages/` directory contains page classes that encapsulate locators and interactions for login, products, cart, and checkout.
+The `pages/` directory contains reusable page classes for login, products, cart, and checkout. Each page class encapsulates its relevant locators and interactions.
 
 ### Test Data
 
-The `test-data/` directory separates login, product, and checkout data from the test logic.
+The `test-data/` directory separates login credentials, product data, and checkout information from test implementation.
 
 ### Custom Fixtures
 
-The `fixtures/testFixtures.js` file defines a reusable login page fixture for tests that need it.
+The `fixtures/testFixtures.js` file provides reusable Playwright fixtures to reduce repeated setup code in test files.
 
 ### Configuration
 
-The `playwright.config.js` file defines the test directory, base URL, timeouts, HTML reporter, Chromium project, screenshot and trace settings, and artifact output directory.
+The `playwright.config.js` file defines the test directory, application base URL, timeouts, HTML reporter, Chromium browser configuration, screenshot and trace settings, and test artifact output directory.
+
+## Test Independence and Repeatability
+
+Tests should prepare their own required application state and must not depend on the execution order of other tests. Cart tests should establish their own cart contents, and checkout tests should prepare the required products before starting checkout.
+
+Run the test suite multiple times to check for inconsistent results and identify potential flaky tests.
 
 ## Application Under Test
 
-SauceDemo: https://www.saucedemo.com/
+[SauceDemo](https://www.saucedemo.com/)
 
 ## Author
-
 **Ubais Ahamed**
 
-**GitHub repository:** https://github.com/UbaisAd/saucedemo-playwright-automation
+## GitHub Repository
+https://github.com/UbaisAd/saucedemo-playwright-automation](https://github.com/UbaisAd/saucedemo-playwright-automation
