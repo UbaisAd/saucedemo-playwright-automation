@@ -6,8 +6,7 @@ const CheckoutPage = require('../pages/CheckoutPage');
 const loginData = require('../test-data/loginData');
 const checkoutData = require('../test-data/checkoutData');
 
-//TC04 Covered in this script
-
+// TC04 - Verify product listings
 
 test('should display product names and prices on the products page', async ({ page,login }) => {
     

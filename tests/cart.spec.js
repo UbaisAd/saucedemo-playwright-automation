@@ -7,8 +7,8 @@ const loginData = require('../test-data/loginData');
 const checkoutData = require('../test-data/checkoutData');
 
 
-//TC05, TC06 Covered in this script
-
+// TC05 - Add a product to the cart
+// TC06 - Remove a product from the cart
 test('should remove a product from the shopping cart', async ({ page, login }) => {
      
 

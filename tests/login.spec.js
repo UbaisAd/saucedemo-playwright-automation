@@ -1,7 +1,10 @@
 const { test, expect } = require('../fixtures/testFixtures');
 const loginData = require('../test-data/loginData')
 
-// TC01, TC02, TC03 covered in this script
+// TC01 - Login with valid credentials
+// TC02 - Login with invalid credentials
+// TC03 - Login with empty credentials
+
 test.describe('login with data driven',()=>{
 
     

@@ -6,7 +6,8 @@ const CheckoutPage = require('../pages/CheckoutPage');
 const loginData = require('../test-data/loginData');
 const checkoutData = require('../test-data/checkoutData');
 
-// # TC07, TC08 covered in this script
+// TC07 - Complete the checkout workflow
+// TC08 - Attempt checkout with missing customer information
 
 test.describe('Checkout tests', () => {
 
