@@ -11,51 +11,43 @@ class ProductPage{
     }
 
     async addProductTocart() {
-    const allProducts = await this.getProductName();
-    
-    const randomIndex = Math.floor(Math.random() * allProducts.length);
-      const randomProduct = allProducts[randomIndex];
+        const allProducts = await this.getProductName();
+        
+        const randomIndex = Math.floor(Math.random() * allProducts.length);
+        const randomProduct = allProducts[randomIndex];
 
-    const item = await this.page.locator(ProductPage.locators.items).filter({ hasText: randomProduct.name });
+        const item = this.page.locator(ProductPage.locators.items).filter({ hasText: randomProduct.name });
+        const addButton = item.getByRole('button', { name: 'Add to cart', exact: true });
 
-    const addButton = item.getByRole('button', {name: 'Add to cart',exact: true });
+        await addButton.click();
+        await item.getByRole('button', { name: 'Remove', exact: true }).waitFor({ state: 'visible' });
 
-          await addButton.click();
-    
-    
-    console.log("Selected Product: " + randomProduct.name);
-    console.log("Price: " + randomProduct.price);
-   
-    return randomProduct
-}
+        console.log("Selected Product: " + randomProduct.name);
+        console.log("Price: " + randomProduct.price);
 
-    async getProductName(){
-            const items = this.page.locator(ProductPage.locators.items);
-            const productNames = items.locator(ProductPage.locators.productName);
-            const productPrices = items.locator(ProductPage.locators.productPrice);
-
-            await items.first().waitFor({ state: 'visible' });
-
-            const productDetails = [];
-
-            for(let i = 0;i<await items.count();i++){
-
-                productDetails.push({
-                     item: i+1,
-                    name: await productNames.nth(i).innerText(),
-                        price: await productPrices.nth(i).innerText()
-});
-                                    
-            }
-
-            return productDetails;
-            
-
-         
+        return randomProduct;
     }
 
+    async getProductName() {
+        const items = this.page.locator(ProductPage.locators.items);
+        await items.first().waitFor({ state: 'visible' });
 
+        const count = await items.count();
+        const productDetails = [];
 
+        for (let i = 0; i < count; i++) {
+            const item = items.nth(i);
+            const name = await item.locator(ProductPage.locators.productName).innerText();
+            const price = await item.locator(ProductPage.locators.productPrice).innerText();
+            productDetails.push({
+                item: i + 1,
+                name,
+                price
+            });
+        }
+
+        return productDetails;
+    }
 }
 
 
