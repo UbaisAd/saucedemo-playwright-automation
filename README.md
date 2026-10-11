@@ -16,6 +16,7 @@ It covers login, product listings, shopping cart operations, and checkout workfl
 - Node.js v24.19.0
 - npm 12.0.2
 - HTML test reports
+- Git and GitHub
 - GitHub Actions
 
 ## Project Structure
@@ -25,6 +26,8 @@ QaTask/
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml
+├── evidence/
+│   └── playwright-test-results.png
 ├── fixtures/
 │   └── testFixtures.js
 ├── pages/
@@ -48,7 +51,7 @@ QaTask/
 └── README.md
 ```
 
-Generated test results, HTML reports, screenshots, traces, and `node_modules/` are excluded from version control according to the project's `.gitignore`.
+**Note:** Add the `evidence/playwright-test-results.png` entry after you create and save the screenshot in that location. The generated test reports, failure artifacts, and `node_modules/` are excluded from version control through `.gitignore`.
 
 ## Features
 
@@ -73,9 +76,9 @@ Generated test results, HTML reports, screenshots, traces, and `node_modules/` a
 | `cart.spec.js` | Add a product to the cart and remove a product |
 | `checkout.spec.js` | Complete checkout and validate missing customer information |
 
-The suite contains 10 test cases covering login, product listing, cart, and checkout functionality.
+The suite contains **10 test cases** covering login, product listing, cart, and checkout functionality.
 
-### Parameterized Login Tests
+## Parameterized Login Tests
 
 Login scenarios use a dedicated test-data file to separate credentials and expected outcomes from test implementation.
 
@@ -97,20 +100,34 @@ Versions used during development:
 
 ## Installation
 
-Clone or download the repository and open a terminal in the project directory.
+Clone the repository:
+
+```bash
+git clone https://github.com/UbaisAd/saucedemo-playwright-automation.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd saucedemo-playwright-automation
+```
 
 Install the dependencies:
 
 ```bash
-npm install
+npm ci
 ```
-
-Alternatively, use `npm ci` to install dependencies from the committed lock file.
 
 Install the Chromium browser:
 
 ```bash
 npx playwright install chromium
+```
+
+On Linux, if browser system dependencies are missing, run:
+
+```bash
+npx playwright install --with-deps chromium
 ```
 
 ## Running Tests
@@ -133,10 +150,10 @@ Run tests with the browser visible:
 npx playwright test --headed
 ```
 
-Run the complete suite again to check for inconsistent results:
+Run tests using a single worker for easier-to-read console output:
 
 ```bash
-npx playwright test
+npx playwright test --workers=1
 ```
 
 ## HTML Test Report
@@ -149,11 +166,25 @@ npx playwright show-report
 
 The HTML report provides an overview of passed and failed tests and details for individual test cases.
 
+## Proof of Execution
+
+The `evidence/` directory contains screenshots demonstrating successful test execution.
+
+The test suite was executed successfully with **10 passed tests** during development.
+
+Example evidence file:
+
+```text
+evidence/playwright-test-results.png
+```
+
+The screenshot should show the final Playwright test summary. Add this file to the repository after capturing it.
+
 ## Failure Debugging
 
 The Playwright configuration is set to capture screenshots on failure and retain traces for failed tests. Generated artifacts are written to the configured `FailureScreenshots/` output directory.
 
-### Locate failure artifacts
+### Locate Failure Artifacts
 
 In PowerShell, list the generated files:
 
@@ -206,7 +237,9 @@ Run the test suite multiple times to check for inconsistent results and identify
 [SauceDemo](https://www.saucedemo.com/)
 
 ## Author
+
 **Ubais Ahamed**
 
 ## GitHub Repository
-https://github.com/UbaisAd/saucedemo-playwright-automation](https://github.com/UbaisAd/saucedemo-playwright-automation
+
+[View SauceDemo Playwright Automation Framework](https://github.com/UbaisAd/saucedemo-playwright-automation)
