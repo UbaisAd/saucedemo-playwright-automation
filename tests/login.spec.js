@@ -1,16 +1,14 @@
-const{test , expect} = require('@playwright/test');
-const loginPage = require('../pages/LoginPage')
+const { test, expect } = require('../fixtures/testFixtures');
 const loginData = require('../test-data/loginData')
 
-
+// TC01, TC02, TC03 covered in this script
 test.describe('login with data driven',()=>{
 
     
     for(const loginValues of loginData){
         
-        test(`login with ${loginValues.scenario}` , async({page})=>{
-                       
-               const login = new loginPage(page);
+test(loginValues.scenario, async ({ page, login }) => {      
+
 
                 await page.goto(login.appUrl());
                 await login.enterUserName(loginValues.username)
@@ -27,9 +25,9 @@ test.describe('login with data driven',()=>{
 
                 await expect(await login.getLoginErrorMessage()).toHaveText("Epic sadface: Username and password do not match any user in this service")
             
-            }  else if(loginValues.expectedStatus==="password is required"){
+            }        else if(loginValues.expectedStatus==="password is required"){
 
-                await expect(await login.getLoginErrorMessage()).toHaveText('Epic sadface: Password is required');
+                await expect(await login.getLoginErrorMessage()).toHaveText("Epic sadface: Password is required")
             
             }
               else if(loginValues.expectedStatus==="username is required"){

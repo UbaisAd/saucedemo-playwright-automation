@@ -42,15 +42,14 @@ timeout: 5000,
     baseURL: 'https://www.saucedemo.com',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 
-
-
-
       screenshot : 'only-on-failure',  
       trace:'retain-on-failure',    
 
       
 
   },
+  outputDir: './FailureScreenshots',
+
 
   /* Configure projects for major browsers */
   projects: [

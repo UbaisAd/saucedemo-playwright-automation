@@ -1,25 +1,31 @@
 const loginData = [
     {
-        scenario: "valid username and password",
+        scenario: "should login successfully with valid credentials",
         username: "standard_user",
         password: "secret_sauce",
         expectedStatus: "Success"
     },
-   
+    
     {
-        scenario: "invalid username and password",
+        scenario: "should display an error for invalid credentials",
         username: "invalid_user",
         password: "wrong_password",
         expectedStatus: "invalid username or password"
     },
-      {
-        scenario: "Valid username with an invalid password",
+    {
+        scenario: "should display an error when the password is incorrect",
         username: "standard_user",
-        password: "wrongPass",
+        password: "wrong_password",
+        expectedStatus: "invalid username or password"
+    },
+    {
+        scenario: "should display an error when the password is empty",
+        username: "standard_user",
+        password: "",
         expectedStatus: "password is required"
     },
     {
-        scenario: "Empty credentials",
+        scenario: "should display an error when both credentials are empty",
         username: "",
         password: "",
         expectedStatus: "username is required"
